@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Quiz ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff4d6d,#ff8fab,#ffc2d1);
+    overflow:hidden;
+}
+
+.container{
+    width:90%;
+    max-width:650px;
+    background:rgba(255,255,255,0.95);
+    padding:35px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,.2);
+    position:relative;
+    z-index:2;
+}
+
+h1{
+    color:#ff4d6d;
+    margin-bottom:20px;
+}
+
+.question{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:20px;
+    color:#444;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    font-size:16px;
+    background:#ffe5ec;
+    transition:.3s;
+}
+
+button:hover{
+    background:#ffb3c6;
+    transform:scale(1.03);
+}
+
+.progress{
+    margin-bottom:20px;
+    color:#777;
+}
+
+#letter{
+    display:none;
+    animation:showLetter 1s ease;
+}
+
+#letter h2{
+    color:#ff4d6d;
+    margin-bottom:20px;
+}
+
+#letter p{
+    line-height:1.8;
+    color:#555;
+    font-size:18px;
+}
+
+@keyframes showLetter{
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.heart{
+    position:absolute;
+    color:#ff4d6d;
+    font-size:25px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-100px);
+        opacity:1;
+    }
+    to{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div id="quiz">
+<h1>❤️ Love Quiz ❤️</h1>
+
+<div class="progress" id="progress">
+Pertanyaan 1 dari 4
+</div>
+
+<div class="question" id="question"></div>
+
+<div id="answers"></div>
+</div>
+
+<div id="letter">
+<h2>💌 Selamat Sayang 💌</h2>
+
+<p>
+Kamu berhasil menjawab semua pertanyaan dengan benar. ❤️
+<br><br>
+
+Terima kasih sudah menjadi bagian terindah dalam hidupku sejak
+<b>13 Desember 2025</b>.
+<br><br>
+
+Mungkin ada hari-hari di mana kita saling kesal,
+ada saat-saat kamu ngambek, dan ada banyak tingkah lucu
+yang membuatku tersenyum setiap hari.
+<br><br>
+
+Mulai dari cerita-cerita random,
+sampai hal unik seperti makan es krim dengan kecap bango,
+semuanya menjadi kenangan yang tidak akan pernah kulupakan.
+<br><br>
+
+Aku juga tahu betapa kamu menyukai boneka Nailong,
+dan melihatmu bahagia karena hal-hal sederhana selalu membuatku ikut bahagia.
+<br><br>
+
+Semoga kita bisa terus bersama,
+menciptakan lebih banyak kenangan,
+lebih banyak tawa,
+dan lebih banyak cerita indah di masa depan.
+<br><br>
+
+❤️ Aku Sayang Kamu ❤️
+<br>
+🌹 Selamanya 🌹
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const quizData = [
+{
+question:"❤️ Kapan tanggal jadian kita?",
+answers:[
+"13 Desember 2025",
+"25 Desember 2025",
+"1 Januari 2026",
+"14 Februari 2025"
+],
+correct:"13 Desember 2025"
+},
+{
+question:"🍦 Hal paling aneh yang pernah dilakukan pacarmu?",
+answers:[
+"Makan nasi pakai cokelat",
+"Makan es krim dengan kecap bango",
+"Minum kopi dengan garam",
+"Makan kerupuk dengan susu"
+],
+correct:"Makan es krim dengan kecap bango"
+},
+{
+question:"🧸 Apa yang paling disukai pacarmu?",
+answers:[
+"Boneka Beruang",
+"Boneka Kucing",
+"Boneka Nailong",
+"Bantal Karakter"
+],
+correct:"Boneka Nailong"
+},
+{
+question:"😆 Apakah pacarmu sering ngambekan?",
+answers:[
+"Iya",
+"Tidak"
+],
+correct:"Iya"
+}
+];
+
+let currentQuestion = 0;
+
+function loadQuestion(){
+
+if(currentQuestion >= quizData.length){
+showLetter();
+return;
+}
+
+document.getElementById("progress").innerText =
+`Pertanyaan ${currentQuestion+1} dari ${quizData.length}`;
+
+const q = quizData[currentQuestion];
+
+document.getElementById("question").innerText = q.question;
+
+const answersDiv = document.getElementById("answers");
+answersDiv.innerHTML = "";
+
+q.answers.forEach(answer=>{
+
+const btn = document.createElement("button");
+btn.innerText = answer;
+
+btn.onclick = ()=>{
+
+if(answer === q.correct){
+
+currentQuestion++;
+
+setTimeout(()=>{
+loadQuestion();
+},300);
+
+}else{
+alert("❌ Jawaban salah, coba lagi ya sayang ❤️");
+}
+};
+
+answersDiv.appendChild(btn);
+
+});
+
+}
+
+function showLetter(){
+
+document.getElementById("quiz").style.display = "none";
+document.getElementById("letter").style.display = "block";
+
+setInterval(createHeart,150);
+}
+
+function createHeart(){
+
+const heart = document.createElement("div");
+
+heart.classList.add("heart");
+heart.innerHTML = "❤️";
+
+heart.style.left = Math.random()*100 + "vw";
+heart.style.fontSize = (Math.random()*20 + 20) + "px";
+heart.style.animationDuration = (Math.random()*3 + 2) + "s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},5000);
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
